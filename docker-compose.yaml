@@ -1,5 +1,4 @@
 ---
-version: "3.9"
 services:
 
   sngrep:
@@ -80,6 +79,24 @@ services:
       external:
         ipv4_address: 192.168.254.101
 
+  db:
+    image: mariadb:10.6
+    restart: always
+    container_name: db01
+    environment:
+      MYSQL_DATABASE: 'kamailio'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'ro_password'
+      MYSQL_ROOT_PASSWORD: 'rw_password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      internal:
+        ipv4_address: 172.16.254.10
 
 networks:
     external:
